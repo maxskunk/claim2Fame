@@ -4,12 +4,13 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { PitchPage } from '../pages/pitch/pitch';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { PhotoPage } from '../pages/photo/photo';
+import { Gyroscope } from '@ionic-native/gyroscope/ngx';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { PhotoPage } from '../pages/photo/photo';
     HomePage,
     //ListPage,
     PitchPage,
-    PhotoPage
+    PhotoPage,
   ],
   imports: [
     BrowserModule,
@@ -29,11 +30,13 @@ import { PhotoPage } from '../pages/photo/photo';
     HomePage,
     // ListPage,
     PitchPage,
-    PhotoPage
+    PhotoPage,
+
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Gyroscope,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
