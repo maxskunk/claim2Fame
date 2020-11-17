@@ -1,0 +1,7 @@
+{
+  "name": "claim2Fame",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "ionic-angular"
+}
