@@ -9,6 +9,10 @@ import { PitchPage } from '../pages/pitch/pitch';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { PhotoPage } from '../pages/photo/photo';
+import { CameraPreviewWeb } from '@capacitor-community/camera-preview/';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
+
 
 
 @NgModule({
@@ -35,7 +39,10 @@ import { PhotoPage } from '../pages/photo/photo';
   providers: [
     StatusBar,
     SplashScreen,
+    CameraPreviewWeb,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule { }
+// Call the element loader after the platform has been bootstrapped
+defineCustomElements(window);

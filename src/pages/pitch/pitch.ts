@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MotionOrientationEventResult, PluginListenerHandle, Capacitor, Motion } from '@capacitor/core';
 
@@ -18,19 +18,14 @@ export class PitchPage {
   public orientationDisplay: string = "loading";
   private orientation: MotionOrientationEventResult;
   private watchListener: PluginListenerHandle;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public plt: Platform) {
-    this.watchListener = Motion.addListener(
-      'orientation', (values) => {
-        console.log('watchListener', values);
-        this.orientation = values;
-        this.orientationDisplay = String(this.orientation.alpha);
-      });
+  constructor(public navCtrl: NavController, public navParams: NavParams, public plt: Platform, private ngZone: NgZone) {
+
   }
 
 
   ionViewDidLoad() {
     Motion.requestPermissions();
-    Capacitor.Plugins;
+    //Capacitor.Plugins;
     console.log('ionViewDidLoad PitchPage');
 
     this.plt.ready().then(() => {
@@ -38,6 +33,18 @@ export class PitchPage {
 
 
     });
+  }
+
+  async ngOnInit() {
+    this.watchListener = Motion.addListener(
+      'orientation', (values) => {
+        this.ngZone.run(() => {
+          console.log('watchListener', values);
+          this.orientation = values;
+          this.orientationDisplay = String(Math.round(this.orientation.alpha));
+        });
+
+      });
   }
 
 
