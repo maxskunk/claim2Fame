@@ -44,8 +44,7 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-camera-preview": {},
-      "cordova-plugin-gyroscope": {}
+      "cordova-plugin-camera-preview": {}
     }
   }
 }

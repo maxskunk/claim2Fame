@@ -9,7 +9,6 @@ import { PitchPage } from '../pages/pitch/pitch';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { PhotoPage } from '../pages/photo/photo';
-import { Gyroscope } from '@ionic-native/gyroscope/ngx';
 
 
 @NgModule({
@@ -36,7 +35,6 @@ import { Gyroscope } from '@ionic-native/gyroscope/ngx';
   providers: [
     StatusBar,
     SplashScreen,
-    Gyroscope,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

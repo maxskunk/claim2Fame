@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope/ngx';
+import { MotionOrientationEventResult, PluginListenerHandle, Capacitor, Motion } from '@capacitor/core';
 
 /**
  * Generated class for the PitchPage page.
@@ -15,62 +15,30 @@ import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native
   templateUrl: 'pitch.html',
 })
 export class PitchPage {
-
-  //private gyroscope: Gyroscope
-  constructor(public navCtrl: NavController, public navParams: NavParams, private gyroscope: Gyroscope, public plt: Platform) {
+  public orientationDisplay: string = "loading";
+  private orientation: MotionOrientationEventResult;
+  private watchListener: PluginListenerHandle;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public plt: Platform) {
+    this.watchListener = Motion.addListener(
+      'orientation', (values) => {
+        console.log('watchListener', values);
+        this.orientation = values;
+        this.orientationDisplay = String(this.orientation.alpha);
+      });
   }
 
-  public value: string = "NEW";
 
   ionViewDidLoad() {
+    Motion.requestPermissions();
+    Capacitor.Plugins;
     console.log('ionViewDidLoad PitchPage');
 
     this.plt.ready().then(() => {
       console.log('ready');
-      let options: GyroscopeOptions = {
-        frequency: 1000
-      }
-      this.gyroscope.getCurrent(options).then((orientation: GyroscopeOrientation) => {
-        this.value = String(orientation.x);
-        console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
-      })
-        .catch()
 
-      this.gyroscope.watch()
-        .subscribe((orientation: GyroscopeOrientation) => {
-          this.value = String(orientation.x);
-          console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
-        });
+
     });
-
-
-    //   this.gyroscope.getCurrent(options)
-    //     .then((orientation: GyroscopeOrientation) => {
-    //       console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
-    //     })
-    //     .catch()
-
-
-    //   this.gyroscope.watch()
-    //     .subscribe((orientation: GyroscopeOrientation) => {
-    //       console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
-    //     });
-    // }
   }
 
-  // this.platform.ready().then((readyState) => {
-  //   let options: GyroscopeOptions = {
-  //     frequency: 1000
-  //   };
 
-  //   this.gyroscope.getCurrent()
-  //     .then((orientation: GyroscopeOrientation) => {
-  //       console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
-  //     });
-
-  //   this.devMotion.getCurrentAcceleration().then(
-  //     (acceleration: DeviceMotionAccelerationData) => console.log(acceleration),
-  //     (error: any) => console.log(error)
-  //   );
-  // });
 }
