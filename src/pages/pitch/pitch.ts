@@ -42,6 +42,7 @@ export class PitchPage {
           console.log('watchListener', values);
           this.orientation = values;
           this.orientationDisplay = String(Math.round(this.orientation.alpha));
+
         });
 
       });

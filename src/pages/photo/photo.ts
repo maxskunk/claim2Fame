@@ -1,9 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview/ngx';
-import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { CameraDirection, CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 
+const { Camera } = Plugins;
 /**
  * Generated class for the PhotoPage page.
  *
@@ -11,7 +11,6 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-photo',
   templateUrl: 'photo.html',
@@ -21,7 +20,7 @@ export class PhotoPage {
   public imgSrc1: string;
 
   @ViewChild('imageElement') imageElement: ElementRef;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private sanitizer: DomSanitizer) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -34,7 +33,7 @@ export class PhotoPage {
   async takePicture() {
     const image = await Camera.getPhoto({
       quality: 90,
-      allowEditing: true,
+      allowEditing: false,
       resultType: CameraResultType.Uri,
       direction: CameraDirection.Front,
       source: CameraSource.Prompt
